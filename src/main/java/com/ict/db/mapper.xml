@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bbs_t">
+		<!-- 나중에 페이징 처리할 때 변경된다. -->
+		<select id="list" resultType="com.ict.db.BVO">
+			select * from bbs_t order by b_idx desc
+		</select>
+		
+		<insert id="insert" parameterType="com.ict.db.BVO">
+			insert into bbs_t values(bbs_t_seq.nextval, #{subject}, #{writer}, #{content}, #{file_name}, #{pwd}, sysdate, 0) 
+		</insert>
+		
+		<select id="onelist" parameterType="String" resultType="com.ict.db.BVO">
+			select * from bbs_t where b_idx = #{b_idx} 
+		</select>
+		
+		<delete id="delete" parameterType="com.ict.db.BVO">
+			delete from bbs_t where b_idx = #{b_idx}
+		</delete>
+		
+		<update id="update" parameterType="com.ict.db.BVO">
+			update bbs_t set subject=#{subject}, writer=#{writer}, content=#{content}, file_name=#{file_name} where b_idx=#{b_idx}
+		</update>
+		
+		<update id="hitup" parameterType="String">
+			update bbs_t set hit=hit + 1 where b_idx=#{b_idx}
+		</update>
+		
+		<select id="clist" parameterType="String" resultType="com.ict.db.CVO">
+			select * from comment_t where b_idx = #{b_idx}
+		</select>
+		
+		<insert id="comm_ins" parameterType="com.ict.db.CVO">
+			insert into comment_t values(comment_t_seq.nextval, null, #{content}, null, sysdate, #{b_idx})
+		</insert>
+</mapper>
