@@ -9,6 +9,7 @@
 <body>
 	<jsp:forward page="/MyController">
 		<jsp:param value="list" name="cmd"/>
+		<jsp:param value="1" name="cPage"/>
 	</jsp:forward>
 </body>
 </html>

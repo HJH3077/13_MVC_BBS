@@ -45,7 +45,7 @@
 </style>
 <script type="text/javascript">
 	function list_go(f) {
-		f.action="${pageContext.request.contextPath}/MyController?cmd=list";
+		f.action="${pageContext.request.contextPath}/MyController?cmd=list&cPage=${cPage}";
 		f.submit();
 	}
 	
@@ -53,7 +53,7 @@
 		if("${bvo.pwd}" == f.pwd.value){
 			var chk = confirm("정말 삭제할까요?");
 			if(chk){
-				f.action="${pageContext.request.contextPath}/MyController?cmd=delete_ok";
+				f.action="${pageContext.request.contextPath}/MyController?cmd=delete_ok&cPage=${cPage}";
 				f.submit();
 			}else{
 				history.go(-1);
@@ -80,6 +80,7 @@
 					<td colspan="2" style="text-align: center">
 						<input type="button" value="삭제" onclick="delete_go(this.form)" />
 						<input type="button" value="목록" onclick="list_go(this.form)" />
+						<%-- <input type="hidden" name="cPage" value="${cPage }"> --%>
 					</td>
 				</tr>
 			</tbody>

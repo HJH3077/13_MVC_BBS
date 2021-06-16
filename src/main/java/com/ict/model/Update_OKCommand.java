@@ -52,7 +52,8 @@ public class Update_OKCommand implements Command {
 					}
 				} catch (Exception e) {
 				}
-				return "MyController?cmd=onelist&b_idx=" + bvo.getB_idx();
+				String cPage = mr.getParameter("cPage");
+				return "MyController?cmd=onelist&b_idx=" + bvo.getB_idx() + "&cPage=" + cPage;
 			}
 
 		} catch (Exception e) {

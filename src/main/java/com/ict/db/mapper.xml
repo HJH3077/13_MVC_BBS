@@ -3,9 +3,25 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bbs_t">
+
+		<!-- 전체 게시물의 수 (표로나오는게 아니라 숫자이므로 resultType X)-->
+		<select id="count" resultType="int">
+			select count(*) from bbs_t
+		</select>
+		
 		<!-- 나중에 페이징 처리할 때 변경된다. -->
+		<!-- 
 		<select id="list" resultType="com.ict.db.BVO">
 			select * from bbs_t order by b_idx desc
+		</select> 
+		-->
+		
+		<!-- 한 페이지에 사용할 행을 추출하는 쿼리 -->
+		<select id="list" resultType="com.ict.db.BVO" parameterType="Map">
+			select * from 
+	   			(select ROWNUM r_num, a.* from 
+	        		(select * from bbs_t order by b_idx desc) a) 
+						where r_num between #{begin} and #{end}
 		</select>
 		
 		<insert id="insert" parameterType="com.ict.db.BVO">
@@ -15,6 +31,10 @@
 		<select id="onelist" parameterType="String" resultType="com.ict.db.BVO">
 			select * from bbs_t where b_idx = #{b_idx} 
 		</select>
+		
+		<delete id="c_delete_all" parameterType="String">
+			delete from comment_t where b_idx = #{b_idx}
+		</delete>
 		
 		<delete id="delete" parameterType="com.ict.db.BVO">
 			delete from bbs_t where b_idx = #{b_idx}
@@ -35,4 +55,8 @@
 		<insert id="comm_ins" parameterType="com.ict.db.CVO">
 			insert into comment_t values(comment_t_seq.nextval, null, #{content}, null, sysdate, #{b_idx})
 		</insert>
+		
+		<delete id="comm_del" parameterType="String">
+			delete from comment_t where c_idx = #{c_idx}
+		</delete>
 </mapper>

@@ -46,7 +46,7 @@
 </style>
 <script type="text/javascript">
 	function list_go(f) {
-		f.action="${pageContext.request.contextPath}/MyController?cmd=list";
+		f.action="${pageContext.request.contextPath}/MyController?cmd=list&cPage=${cPage}";
 		f.submit();
 	}
 	
@@ -61,7 +61,7 @@
 				return;
 			}
 		}
-		f.action="${pageContext.request.contextPath}/MyController?cmd=write_ok";
+		f.action="${pageContext.request.contextPath}/MyController?cmd=write_ok&cPage=${cPage}";
 		f.submit();
 	}
 </script>

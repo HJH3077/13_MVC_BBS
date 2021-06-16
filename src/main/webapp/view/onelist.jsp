@@ -51,23 +51,32 @@
 </style>
 <script type="text/javascript">
 	function list_go(f) {
-		f.action="${pageContext.request.contextPath}/MyController?cmd=list";
+		f.action="${pageContext.request.contextPath}/MyController?cmd=list&cPage=${cPage}";
 		f.submit();
 	}
 	
 	function update_go(f) {
-		f.action="${pageContext.request.contextPath}/MyController?cmd=update";
+		f.action="${pageContext.request.contextPath}/MyController?cmd=update&cPage=${cPage}";
 		f.submit();
 	}
 	
 	function delete_go(f) {
-		f.action="${pageContext.request.contextPath}/MyController?cmd=delete";
+		f.action="${pageContext.request.contextPath}/MyController?cmd=delete&cPage=${cPage}";
 		f.submit();
 	}
 	
 	function comm_del(f) {
+		if("${bvo.b_idx}" == f.b_idx.value){
+			var chk = confirm("정말 삭제할까요?");
+			if(chk){
+				f.action="${pageContext.request.contextPath}/MyController?cmd=comm_del";
+				f.submit();
+			}
+		} 
+		/* 
 		f.action="${pageContext.request.contextPath}/MyController?cmd=comm_del";
-		f.submit();
+		f.submit(); 
+		*/
 	}
 	
 	function comm_ins(f) {
@@ -138,6 +147,8 @@
 							<tr>
 								<td><textarea rows="4" cols="70" name="content" readonly>${k.content}</textarea></td>
 								<td><input style="height: 70px" type="button" value="댓글 삭제" onclick="comm_del(this.form)"></td>
+								<input type="hidden" name="c_idx" value="${k.c_idx}"> <!-- 그 댓글의 번호만 알면 삭제 가능 -->
+								<input type="hidden" name="b_idx" value="${k.b_idx}"> <!-- 삭제 후 onelist로 이동을 위해 -->
 								<!-- session에 b_idx가 저장되어 있으므로 따로 hidden처리 안해도됨 -->
 							</tr>
 						</tbody>
@@ -154,7 +165,7 @@
 			<table>
 				<tbody>
 					<tr>
-						<!-- 댓글 쓴 사람과 로그인 id가 같으면 삭제 수정 가능하게 만들어야함 => 숙제 -->
+						<!-- 댓글 쓴 사람과 로그인 id가 같으면 삭제 수정 버튼이 보이게 (가능하게) 만들어야함 => 숙제 -->
 						<td><textarea rows="4" cols="70" name="content">${k.content}</textarea></td>
 						<td><input style="height: 70px" type="button" value="댓글" onclick="comm_ins(this.form)"></td>
 					</tr>
